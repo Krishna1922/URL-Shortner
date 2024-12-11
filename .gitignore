@@ -1,0 +1,6 @@
+/url-shortner-backend/.env
+/url-shortner-backend/env/
+.DS_Store
+
+
+/url-shortner-frontend/node_modules/
