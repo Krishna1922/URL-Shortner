@@ -61,12 +61,9 @@ class LongURLschema(BaseModel):
 
 @app.get("/{shortned_url}")
 def get_shortned_url(request : Request, db : db_dependency, shortned_url : str):
-    print(shortned_url)
     url = f'http://localhost:8000/{shortned_url}'
-    print(url)
     result = db.query(MappingTable).filter(MappingTable.ShortUrl == url).first()
     if result is not None:
-
         return JSONResponse(content={'url' : result.LongUrl})
     else:
         return JSONResponse(content={'content' : 'URL is not is database'})
@@ -83,7 +80,6 @@ def ShortTheUrl(request : Request, db : db_dependency, url :  LongURLschema):
 
     mapping_model = MappingTable()
     mapping_model.longID = str(unique_id)
-    print(f'{unique_id}')
     mapping_model.LongUrl = url.longURL
     mapping_model.ShortUrl = f'http://localhost:8000/{shorturl}'
 

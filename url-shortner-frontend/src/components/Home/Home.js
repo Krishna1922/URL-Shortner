@@ -22,17 +22,13 @@ export default function MyApp() {
         };
   
         const response = await axios.post(
-          "http://localhost:8000/generate_url", // Replace with your endpoint
+          "http://localhost:8000/generate_url",
           data
         );
-  
         setResponseMessage(`short URL : ${response.data.url}`);
-        console.log(response.data.url); // Log response to console
       } catch (error) {
-        console.error("Error :", error);
         setResponseMessage("Failed");
       }
-      console.log(inputText);
     }
     
   }
