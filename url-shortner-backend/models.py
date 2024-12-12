@@ -7,7 +7,7 @@ class MappingTable(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     longID = Column(String(64))
-    LongUrl = Column(String(255))
+    LongUrl = Column(String(2048))
     ShortUrl = Column(String(255))
 
 

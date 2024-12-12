@@ -8,9 +8,23 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from models import MappingTable, Base
 from typing import Annotated
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 Base.metadata.create_all(bind = engine)
 def get_db():
     db = SessionLocal()
@@ -47,11 +61,13 @@ class LongURLschema(BaseModel):
 
 @app.get("/{shortned_url}")
 def get_shortned_url(request : Request, db : db_dependency, shortned_url : str):
-    url = f'http://localhost:3000/{shortned_url}'
+    print(shortned_url)
+    url = f'http://localhost:8000/{shortned_url}'
     print(url)
     result = db.query(MappingTable).filter(MappingTable.ShortUrl == url).first()
     if result is not None:
-        return RedirectResponse(url=result.LongUrl, status_code=301)
+
+        return JSONResponse(content={'url' : result.LongUrl})
     else:
         return JSONResponse(content={'content' : 'URL is not is database'})
 
@@ -69,7 +85,7 @@ def ShortTheUrl(request : Request, db : db_dependency, url :  LongURLschema):
     mapping_model.longID = str(unique_id)
     print(f'{unique_id}')
     mapping_model.LongUrl = url.longURL
-    mapping_model.ShortUrl = f'http://localhost:3000/{shorturl}'
+    mapping_model.ShortUrl = f'http://localhost:8000/{shorturl}'
 
     db.add(mapping_model)
     db.commit()

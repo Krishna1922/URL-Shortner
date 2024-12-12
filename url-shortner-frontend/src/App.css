@@ -18,6 +18,7 @@ body {
 }
 
 .butoon{
+  cursor: pointer;
   width: 20%;
   align-items: center;
   color: white;
@@ -26,7 +27,11 @@ body {
   padding: 10px ;
   font-size: 1rem;
   border-radius: 5px;
-  font-weight:bolder
+  font-weight:bolder;
+  
+}
+.butoon:hover{
+  background-color: black;
 }
 .text-box{
   width: 100%;
@@ -35,5 +40,8 @@ body {
   font-size: 1rem;
   border-radius: 5px;
   border: 1px solid black;
-  
+
+}
+p{
+  margin: 10px 5px 15px 5px;
 }

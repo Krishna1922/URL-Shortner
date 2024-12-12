@@ -1,18 +1,25 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import Home from './components/Home/Home';
+import UrlDirection from './components/Urldirection/Urldirection';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-
-export default function MyApp() {
+function App(){
+  // const [redirectt , setRedirect] = useState(null);
+  // useEffect(()=>{
+  //   if(redirectt){
+  //     window.location.href = redirectt;
+  //   }
+     
+  // },[redirectt])
   return (
-    <div className='middle'>
-      <div className='content'>
-        <h1>Welcome to URL shortner</h1>
-        <input  name="myInput" className='text-box'/>
-        <button className='butoon'>
-          Generate
-        </button>
-      </div>
-      
-    </div>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/:slug" element={<UrlDirection/>} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
+
+export default App;
