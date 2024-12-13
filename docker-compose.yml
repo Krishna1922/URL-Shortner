@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: krishna
+      MYSQL_DATABASE: firstdb
+      MYSQL_USER: dummy
+      MYSQL_PASSWORD: dummy
+    ports:
+      - 3306:3306
+    networks:
+      - mynetwork
+
+  url-backend:
+    build: ./url-shortner-backend
+    restart: always
+    ports:
+      - 8000:8000
+    environment:
+      MYSQL_HOST: mysql+pymysql://dummy:dummy@mysql:3306/firstdb
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql
+
+  url-frontend:
+    build: ./url-shortner-frontend
+    ports:
+      - 3000:3000
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
