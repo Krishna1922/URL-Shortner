@@ -16,6 +16,7 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "https://url-shortner-three-orcin.vercel.app"
 ]
 
 app.add_middleware(
@@ -61,8 +62,7 @@ class LongURLschema(BaseModel):
 
 @app.get("/{shortned_url}")
 def get_shortned_url(request : Request, db : db_dependency, shortned_url : str):
-    url = f'http://localhost:8000/{shortned_url}'
-    result = db.query(MappingTable).filter(MappingTable.ShortUrl == url).first()
+    result = db.query(MappingTable).filter(MappingTable.ShortUrl == shortned_url).first()
     if result is not None:
         return JSONResponse(content={'url' : result.LongUrl})
     else:
@@ -81,12 +81,12 @@ def ShortTheUrl(request : Request, db : db_dependency, url :  LongURLschema):
     mapping_model = MappingTable()
     mapping_model.longID = str(unique_id)
     mapping_model.LongUrl = url.longURL
-    mapping_model.ShortUrl = f'http://localhost:8000/{shorturl}'
+    mapping_model.ShortUrl = shorturl
 
     db.add(mapping_model)
     db.commit()
 
-    fullurl = f'http://localhost:3000/{shorturl}'
+    fullurl = f'https://url-shortner-three-orcin.vercel.app/{shorturl}'
     json = {
         'url' : fullurl
     }
