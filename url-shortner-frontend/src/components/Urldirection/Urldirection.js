@@ -11,7 +11,7 @@ const UrlDirection = (setRedirect) => {
   const backend_Call = async () => {
   
     try {
-      const response = await axios.get(`http://localhost:8000/${slug}`);
+      const response = await axios.get(`https://url-shortner-thht.onrender.com/${slug}`);
       let url = response.data.url;
       window.location.href = url;
     } catch (err) {

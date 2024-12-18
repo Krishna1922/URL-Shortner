@@ -22,7 +22,7 @@ export default function MyApp() {
         };
   
         const response = await axios.post(
-          "http://localhost:8000/generate_url",
+          "https://url-shortner-thht.onrender.com/generate_url",
           data
         );
         setResponseMessage(`short URL : ${response.data.url}`);
